@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAZEL — Our Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mint: #00F5A0;
+    --mint-dim: #00c47e;
+    --dark: #0d0d0d;
+    --dark3: #1c1c1c;
+    --border: rgba(255,255,255,0.07);
+    --text: #ececec;
+    --text-muted: #777;
+    --card-bg: rgba(255,255,255,0.025);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.1rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,13,13,0.9);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo-slot { height: 36px; display: flex; align-items: center; }
+  .nav-logo-slot img { height: 100%; width: auto; display: block; }
+  .nav-logo-slot .logo-fallback {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem; letter-spacing: 0.04em; color: var(--text);
+  }
+  .nav-logo-slot .logo-fallback em { font-style: normal; color: var(--mint); }
+  .nav-pill {
+    background: rgba(0,245,160,0.07);
+    border: 0.5px solid rgba(0,245,160,0.25);
+    color: var(--mint);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.14em;
+    padding: 0.3rem 0.85rem; border-radius: 100px; text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 65vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,160,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute; width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(0,245,160,0.07) 0%, transparent 60%);
+    top: 50%; left: 50%; transform: translate(-50%, -55%); pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--mint);
+    margin-bottom: 2rem; opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.15s; position: relative; z-index: 1;
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 4vw, 3.25rem); font-weight: 400;
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.35s;
+    position: relative; z-index: 1;
+  }
+  .hero-title em { font-style: italic; color: var(--mint); }
+  .hero-sub {
+    max-width: 520px; color: var(--text-muted); font-size: 1.05rem;
+    font-weight: 300; line-height: 1.8; margin-bottom: 4rem;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.55s;
+    position: relative; z-index: 1;
+  }
+  .hero-scroll {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s;
+    position: relative; z-index: 1;
+  }
+  .scroll-line { width: 40px; height: 0.5px; background: var(--text-muted); }
+
+  /* TIMELINE */
+  .timeline-section { padding: 5rem 2rem 7rem; max-width: 1060px; margin: 0 auto; }
+  .section-eyebrow {
+    text-align: center; font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint); margin-bottom: 0.9rem;
+  }
+  .section-title {
+    text-align: center; font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 400;
+    letter-spacing: -0.01em; margin-bottom: 5rem;
+  }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: rgba(0,245,160,0.2); transform: translateX(-50%);
+  }
+
+  /* TIMELINE ITEMS */
+  .tl-item {
+    display: grid; grid-template-columns: 1fr 56px 1fr;
+    margin-bottom: 1.2rem; position: relative;
+  }
+  .tl-item:not(:first-child) {
+    margin-top: -5rem;
+  }
+  .tl-item:nth-child(odd)  .tl-content { grid-column: 1; text-align: right; padding-right: 2.8rem; }
+  .tl-item:nth-child(odd)  .tl-node    { grid-column: 2; }
+  .tl-item:nth-child(odd)  .tl-empty   { grid-column: 3; }
+  .tl-item:nth-child(even) .tl-empty   { grid-column: 1; grid-row: 1; }
+  .tl-item:nth-child(even) .tl-node    { grid-column: 2; grid-row: 1; }
+  .tl-item:nth-child(even) .tl-content { grid-column: 3; text-align: left; padding-left: 2.8rem; grid-row: 1; }
+
+  .tl-node {
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 0.5rem; position: relative; z-index: 2;
+  }
+  .tl-dot {
+    width: 13px; height: 13px; border-radius: 50%; background: var(--mint);
+    box-shadow: 0 0 0 3px rgba(0,245,160,0.12), 0 0 18px rgba(0,245,160,0.3);
+    flex-shrink: 0; position: relative;
+  }
+  .tl-dot::after {
+    content: ''; position: absolute; inset: -5px; border-radius: 50%;
+    border: 0.5px solid rgba(0,245,160,0.2);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  /* CARD */
+  .tl-card {
+    background: var(--card-bg); border: 0.5px solid var(--border);
+    border-radius: 14px; padding: 1.4rem 1.5rem;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .tl-card:hover { border-color: rgba(0,245,160,0.2); transform: translateY(-3px); }
+
+  .tl-date {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--mint);
+    display: block; margin-bottom: 0.5rem;
+  }
+  .tl-tag {
+    display: inline-block; font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.65rem; border-radius: 100px; margin-bottom: 0.6rem;
+  }
+  .tag-milestone { background: rgba(0,245,160,0.08);  color: var(--mint); border: 0.5px solid rgba(0,245,160,0.25); }
+  .tag-build     { background: rgba(255,255,255,0.04); color: #aaa;        border: 0.5px solid rgba(255,255,255,0.1); }
+  .tag-launch    { background: rgba(0,196,126,0.1);    color: #00c47e;     border: 0.5px solid rgba(0,196,126,0.25); }
+  .tag-story     { background: rgba(255,255,255,0.03); color: #999;        border: 0.5px solid rgba(255,255,255,0.08); }
+
+  .tl-card-title {
+    font-family: 'DM Serif Display', serif; font-size: 1.1rem;
+    font-weight: 400; line-height: 1.3; margin-bottom: 0.55rem;
+  }
+  .tl-card-body {
+    font-size: 0.88rem; font-weight: 300; color: var(--text-muted);
+    line-height: 1.7; margin-bottom: 1rem;
+  }
+
+  /* ─── IMAGE CAROUSEL ─── */
+  .carousel {
+    position: relative;
+    margin-top: 0.8rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--dark3);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    user-select: none;
+  }
+
+  /* track */
+  .carousel-track-wrap {
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  /* each slide */
+  .carousel-slide {
+    flex: 0 0 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+  }
+  .carousel-slide img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; pointer-events: none;
+  }
+  /* placeholder when no real image */
+  .carousel-slide .slide-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 6px;
+    color: #3a3a3a;
+    font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em;
+  }
+  .slide-placeholder-icon {
+    width: 28px; height: 28px; opacity: 0.25;
+  }
+
+  /* PREV / NEXT ARROWS */
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 10;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(13,13,13,0.75);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    color: var(--text);
+    outline: none;
+  }
+  .carousel-btn:hover {
+    background: rgba(0,245,160,0.15);
+    border-color: rgba(0,245,160,0.4);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .carousel-btn:active { transform: translateY(-50%) scale(0.96); }
+  .carousel-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .carousel-btn.prev { left: 8px; }
+  .carousel-btn.next { right: 8px; }
+
+  /* hide arrows when only 1 slide */
+  .carousel[data-count="1"] .carousel-btn { display: none; }
+
+  /* DOTS */
+  .carousel-dots {
+    display: flex; align-items: center; justify-content: center;
+    gap: 5px; padding: 8px 0 6px;
+    background: transparent;
+  }
+  .carousel-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.25s, transform 0.25s, width 0.25s;
+    outline: none;
+  }
+  .carousel-dot.active {
+    background: var(--mint);
+    width: 16px; border-radius: 3px;
+    transform: none;
+  }
+  .carousel[data-count="1"] .carousel-dots { display: none; }
+
+  /* COUNTER badge */
+  .carousel-counter {
+    position: absolute; bottom: 10px; right: 10px;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.1em; color: rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    padding: 3px 7px; border-radius: 20px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .carousel[data-count="1"] .carousel-counter { display: none; }
+
+  /* swipe hint on first load */
+  .swipe-hint {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 20;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    color: rgba(255,255,255,0.55); letter-spacing: 0.1em;
+    background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+    padding: 5px 12px; border-radius: 20px;
+    animation: hintFade 2.5s ease forwards 1.2s;
+    opacity: 0;
+  }
+  .carousel[data-count="1"] .swipe-hint { display: none; }
+  @keyframes hintFade {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* QUOTE */
+  .quote-section {
+    max-width: 780px; margin: 0 auto; padding: 4rem 2rem 5rem; text-align: center;
+  }
+  .quote-mark {
+    font-family: 'DM Serif Display', serif; font-size: 5rem;
+    line-height: 0.6; color: var(--mint); opacity: 0.25;
+    display: block; margin-bottom: 1.5rem;
+  }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.7rem); font-style: italic;
+    font-weight: 400; line-height: 1.6; color: #ddd; margin-bottom: 1.5rem;
+  }
+  .quote-cite {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--mint);
+  }
+
+  /* CTA */
+  .cta-section { padding: 5rem 2rem 7rem; text-align: center; position: relative; }
+  .cta-glow {
+    position: absolute; width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(0,245,160,0.04) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+  }
+  .cta-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.8rem); font-weight: 400;
+    margin-bottom: 1rem; letter-spacing: -0.01em;
+  }
+  .cta-sub {
+    font-size: 0.95rem; font-weight: 300; color: var(--text-muted);
+    max-width: 420px; margin: 0 auto 2.5rem; line-height: 1.75;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--mint); color: #000;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    font-size: 0.85rem; letter-spacing: 0.04em;
+    padding: 0.8rem 1.9rem; border-radius: 100px; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--mint-dim); transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+    font-size: 0.85rem; letter-spacing: 0.04em;
+    padding: 0.8rem 1.9rem; border-radius: 100px;
+    border: 0.5px solid var(--border); text-decoration: none; margin-left: 0.9rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+
+  footer {
+    border-top: 0.5px solid var(--border); padding: 1.8rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text-muted); font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.08em;
+  }
+  footer a { color: var(--mint); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%       { opacity: 0;   transform: scale(1.9); }
+  }
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.2rem; }
+    .timeline::before { left: 18px; }
+    .tl-item { grid-template-columns: 36px 1fr; }
+    .tl-item:nth-child(odd)  .tl-content,
+    .tl-item:nth-child(even) .tl-content {
+      grid-column: 2; grid-row: 1; text-align: left; padding: 0 0 0 1.2rem;
+    }
+    .tl-item:nth-child(odd)  .tl-node,
+    .tl-item:nth-child(even) .tl-node { grid-column: 1; grid-row: 1; }
+    .tl-item:nth-child(odd)  .tl-empty,
+    .tl-item:nth-child(even) .tl-empty { display: none; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .btn-ghost { margin-left: 0; margin-top: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-slot">
+    <img src="/HazelBlog/assets/logo.png" alt="HAZEL"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <span class="logo-fallback" style="display:none;">HAZ<em>3</em>L</span>
+  </div>
+  <span class="nav-pill">Journal</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">Building in public · Our story</p>
+  <h1 class="hero-title">The making of <em>HAZEL</em></h1>
+  <p class="hero-sub">We're sharing everything — the breakthroughs, the late nights, the messy bits. This is our honest story, one chapter at a time.</p>
+  <div class="hero-scroll">
+    <span class="scroll-line"></span>
+    scroll to explore
+    <span class="scroll-line"></span>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <p class="section-eyebrow">Timeline</p>
+  <h2 class="section-title">Chapter by chapter</h2>
+
+  <div class="timeline">
+
+    <!-- CARD 1 -->
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-story">The beginning</span>
+          <span class="tl-date">Week 01</span>
+          <h3 class="tl-card-title">Why did we even start this?</h3>
+          <p class="tl-card-body">It began as a simple thought what if we could build something meaningful instead of just another project?
+At that point, we didn’t know what Hazel would become. We just knew we had to start.</p>
+          <!-- CAROUSEL: add as many <img> tags as you have photos. Replace src with your file paths. -->
+          <div class="carousel" data-count="2">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week1/week1p2.jpg" alt="Sketch 1"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week1/week1p1.PNG" alt="Sketch 2"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 2</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Week 03</span>
+          <h3 class="tl-card-title">From random thoughts to a direction</h3>
+          <p class="tl-card-body">Ideas were everywhere. None of them made complete sense.
+But slowly, through conversations and debates, something started to take shape, Project Hazel.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week3/week3p3.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week3/week3p2.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week3/week3p1.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Week 05</span>
+          <h3 class="tl-card-title">We finally started building</h3>
+          <p class="tl-card-body">Messy code. Broken logic. Nothing worked the way we expected.
+But this was the moment we stopped thinking and started doing.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week5/week5p3.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week5/week5p2.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week5/week5p1.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Week 07</span>
+          <h3 class="tl-card-title">The robot was bigger than we expected</h3>
+          <p class="tl-card-body">The hardware changed everything.
+Wires, sensors, space issues nothing fit the way we planned.
+What looked simple on paper became one of the biggest challenges.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week7/week7p3.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week7/week7p2.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week7/week7p1.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Milestone</span>
+          <span class="tl-date">Week 09</span>
+          <h3 class="tl-card-title">First viva, reality check</h3>
+          <p class="tl-card-body">Standing there explaining our work made us realise how much we didn’t know.
+It wasn’t perfect, but it was real. That was enough to keep going.</p>
+          <div class="carousel" data-count="1">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week9/week9p1.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 1</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-milestone">Milestone</span>
+          <span class="tl-date">Week 11</span>
+          <h3 class="tl-card-title">An opportunity beyond expectations</h3>
+          <p class="tl-card-body">We got the chance to pitch Project Hazel to US delegates.
+Excitement, nerves, and preparation all came together in that moment.
+It felt unreal to present something we built from scratch on such a stage.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week11/week11p3.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week11/week11p2.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week11/week11p1.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-launch">Building</span>
+          <span class="tl-date">Week 13</span>
+          <h3 class="tl-card-title">The people who helped us move forward</h3>
+          <p class="tl-card-body">Behind everything we built, there was guidance that kept us on track.
+Special thanks to our supervisor Mr. Sanjula and the SDGP module leader Banuka Athuraliya for their support, advice, and belief in our work.
+
+This journey would not have been the same without them.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week13/week13p3.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week13/week13p2.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week13/week13p1.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <!-- NEW 6 CARDS -->
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Weeks 15</span>
+          <h3 class="tl-card-title">We started taking it seriously</h3>
+          <p class="tl-card-body">This was the phase where things shifted. Less talking. More execution. We began to see Hazel as something more than just a submission.</p>
+          <div class="carousel" data-count="2">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week15/week15p2.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week15/week15p1.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 2</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Weeks 17</span>
+          <h3 class="tl-card-title">Everything started breaking</h3>
+          <p class="tl-card-body">Bugs. Delays. Hardware issues. For every step forward, it felt like we took two steps back. This phase tested our patience the most.</p>
+          <div class="carousel" data-count="1">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week17/week17p1.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 1</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Weeks 19</span>
+          <h3 class="tl-card-title">Marketing Phase</h3>
+          <p class="tl-card-body">We realised building wasn’t enough — people needed to understand it. So we started thinking beyond code: presentation, storytelling, identity.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week19/week19p3.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week19/week19p2.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week19/week19p1.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Weeks 21</span>
+          <h3 class="tl-card-title">Sleep became optional</h3>
+          <p class="tl-card-body">Deadlines got closer. Pressure got heavier. Most of the real work happened after midnight. Tired, stressed but still moving forward.</p>
+          <div class="carousel" data-count="3">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week21/week21p3.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week21/week21p2.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week21/week21p1.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 3</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 3</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-empty"></div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-build">Building</span>
+          <span class="tl-date">Weeks 23</span>
+          <h3 class="tl-card-title">Everything finally connected</h3>
+          <p class="tl-card-body">For the first time, everything worked as one. Code, hardware, design — all coming together into something real.</p>
+          <div class="carousel" data-count="1">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week23/week23p1.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 1</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-content">
+        <div class="tl-card">
+          <span class="tl-tag tag-milestone">Milestone</span>
+          <span class="tl-date">Week 24</span>
+          <h3 class="tl-card-title">How it all finished</h3>
+          <p class="tl-card-body">After everything — the stress, the chaos, the effort — we made it. Project Hazel wasn’t just a project anymore. It became a journey, a memory, and a story we’ll always carry.</p>
+          <div class="carousel" data-count="2">
+            <div class="carousel-track-wrap">
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week24/week24p2.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 1</div>
+                </div>
+                <div class="carousel-slide">
+                  <img src="/HazelBlog/assets/week24/week24p1.jpeg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="slide-placeholder"><svg class="slide-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>add photo 2</div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <div class="carousel-counter">1 / 2</div>
+            <div class="swipe-hint">← swipe →</div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active"></button>
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUOTE -->
+              <button class="carousel-dot"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-node"><div class="tl-dot"></div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section reveal">
+  <span class="quote-mark">"</span>
+  <p class="quote-text">We never wanted to build a gadget. We wanted to build something you'd miss when it's not there.</p>
+  <span class="quote-cite">— HAZEL team</span>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title">Follow the journey</h2>
+  <p class="cta-sub">New chapters drop whenever we have something real to share. No fluff, no filters — just what's actually happening.</p>
+  <div>
+    <a href="#" class="btn-primary">Get updates →</a>
+    <a href="#" class="btn-ghost">Meet HAZEL</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 HAZEL</span>
+  <a href="#">hazel.xyz/blog</a>
+</footer>
+
+<script>
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Carousel logic — one instance per .carousel ── */
+document.querySelectorAll('.carousel').forEach(car => {
+  const track   = car.querySelector('.carousel-track');
+  const slides  = car.querySelectorAll('.carousel-slide');
+  const dots    = car.querySelectorAll('.carousel-dot');
+  const counter = car.querySelector('.carousel-counter');
+  const prevBtn = car.querySelector('.carousel-btn.prev');
+  const nextBtn = car.querySelector('.carousel-btn.next');
+  const total   = slides.length;
+  let current   = 0;
+  let startX    = 0;
+  let isDragging = false;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    if (counter) counter.textContent = `${current + 1} / ${total}`;
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  /* touch / mouse swipe */
+  const wrap = car.querySelector('.carousel-track-wrap');
+
+  function onDragStart(x) { startX = x; isDragging = true; }
+  function onDragEnd(x) {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = startX - x;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  }
+
+  wrap.addEventListener('touchstart',  e => onDragStart(e.touches[0].clientX), { passive: true });
+  wrap.addEventListener('touchend',    e => onDragEnd(e.changedTouches[0].clientX));
+  wrap.addEventListener('mousedown',   e => onDragStart(e.clientX));
+  wrap.addEventListener('mouseup',     e => onDragEnd(e.clientX));
+  wrap.addEventListener('mouseleave',  e => { if (isDragging) onDragEnd(e.clientX); });
+
+  /* keyboard when focused */
+  car.setAttribute('tabindex', '0');
+  car.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+});
+</script>
+</body>
+</html>
