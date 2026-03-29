@@ -163,9 +163,9 @@ nav {
   padding: 0.2rem 0.65rem; border-radius: 100px; margin-bottom: 0.6rem;
 }
 .tag-milestone { background: rgba(0,245,160,0.08);  color: var(--mint); border: 0.5px solid rgba(0,245,160,0.25); }
-.tag-build     { background: rgba(255,255,255,0.04); color: #aaa;        border: 0.5px solid rgba(255,255,255,0.1); }
+.tag-build     { background: rgba(0, 245, 160, 0.08); color: var(--mint); border: 0.5px solid rgba(0, 245, 160, 0.25); }
 .tag-launch    { background: rgba(0,196,126,0.1);    color: #00c47e;     border: 0.5px solid rgba(0,196,126,0.25); }
-.tag-story     { background: rgba(255,255,255,0.03); color: #999;        border: 0.5px solid rgba(255,255,255,0.08); }
+.tag-story     { background: rgba(0, 245, 160, 0.08); color: var(--mint); border: 0.5px solid rgba(0, 245, 160, 0.25); }
 
 .tl-card-title {
   font-family: 'DM Serif Display', serif; font-size: 1.1rem;
